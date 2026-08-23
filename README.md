@@ -1,5 +1,7 @@
 # Project DevOps Deploy
 
+[![CI](https://github.com/mikitasazan/devops-engineer-from-scratch-project-315/actions/workflows/ci.yml/badge.svg)](https://github.com/mikitasazan/devops-engineer-from-scratch-project-315/actions/workflows/ci.yml)
+
 Bulletin board service.
 
 > **Fork policy**: this upstream repository is read-only. We do not review or merge pull requests and we do not accept infrastructure changes (Dockerfiles, Ansible roles, CI/CD workflows, etc.). To experiment or extend the project, fork it and work inside your own repository.

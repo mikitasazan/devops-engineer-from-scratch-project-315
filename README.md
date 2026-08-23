@@ -61,6 +61,30 @@ The MinIO initializer creates the bucket before the application starts. In a
 cloud deployment, replace these local values with Ansible Vault secrets for
 the selected S3 provider.
 
+Add the reverse proxy for local verification:
+
+```bash
+docker compose --env-file .env.example --env-file .env.s3 \
+  -f docker-compose.prod.yml -f docker-compose.s3.yml \
+  -f docker-compose.nginx.yml up -d
+```
+
+Nginx forwards application requests to Spring Boot and caches successful
+responses under `/assets/`.
+
+For HTTPS, copy `nginx-https.conf.example` to the active Nginx configuration,
+replace `APP_DOMAIN`, and run the certificate playbook with values kept outside
+Git:
+
+```bash
+ansible-playbook -i inventory certbot.yml \
+  -e app_domain=app.example.com \
+  -e letsencrypt_email=admin@example.com
+```
+
+The playbook configures automatic renewal. Renewal reloads Nginx through the
+deploy hook.
+
 ## Environment variables
 
 Key variables are read directly by Spring Boot (see `src/main/resources/application.yml` and `application-prod.yml` for defaults):

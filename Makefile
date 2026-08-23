@@ -24,10 +24,13 @@ docker-build:
 docker-run:
 	docker run --rm -p 8080:8080 -p 9090:9090 bulletin-board:local
 
+deploy:
+	ansible-playbook -i inventory deploy.yml -e image=$(IMAGE)
+
 lint:
 	./gradlew spotlessCheck
 
 lint-fix:
 	./gradlew spotlessApply
 
-.PHONY: build docker-build docker-run
+.PHONY: build docker-build docker-run deploy

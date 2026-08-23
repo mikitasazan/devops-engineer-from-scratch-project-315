@@ -31,6 +31,14 @@ ansible-playbook -i inventory playbook.yml
 The playbook installs Docker and the Compose plugin, adds the SSH user to the
 Docker group, and configures UFW for SSH and web traffic.
 
+Deploy a selected immutable image tag with one command:
+
+```bash
+make deploy IMAGE=ghcr.io/mikitasazan/devops-engineer-from-scratch-project-315:<git-sha>
+```
+
+To roll back, run the same command with an earlier known-good SHA tag.
+
 ## Environment variables
 
 Key variables are read directly by Spring Boot (see `src/main/resources/application.yml` and `application-prod.yml` for defaults):

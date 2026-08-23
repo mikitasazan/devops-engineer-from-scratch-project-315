@@ -39,6 +39,16 @@ make deploy IMAGE=ghcr.io/mikitasazan/devops-engineer-from-scratch-project-315:<
 
 To roll back, run the same command with an earlier known-good SHA tag.
 
+For a persistent PostgreSQL deployment, copy `.env.example` to `.env`, set a
+strong database password, and start the stack:
+
+```bash
+docker compose --env-file .env -f docker-compose.prod.yml up -d
+```
+
+The application waits for PostgreSQL to become healthy. Hibernate updates the
+schema on startup, so a restart keeps data in the named volumes.
+
 ## Environment variables
 
 Key variables are read directly by Spring Boot (see `src/main/resources/application.yml` and `application-prod.yml` for defaults):

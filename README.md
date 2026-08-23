@@ -17,9 +17,20 @@ API documentation is available via Swagger UI at `http://localhost:8080/swagger-
 - Shared static assets for the backend are served from `src/main/resources/static` (populated by the frontend build when needed).
 - Server preparation is defined in `playbook.yml`; set the VM address in `inventory` before running it.
 
+Application URL after DNS and HTTPS are configured: `https://app.example.com`
+(replace the example domain with the real one).
+
 Keep this structure in mind when running commands—backend tooling (`gradlew`, `make run`, tests) run from the root, frontend tooling (`npm`, `vite`) runs from `frontend/`.
 
 ## Server preparation
+
+The target host must be an Ubuntu server with SSH access, a public IP, ports
+22/80/443 allowed, and enough disk space for Docker images and persistent
+volumes. Install the Ansible dependencies first:
+
+```bash
+make ansible-install
+```
 
 Install the required Ansible role and prepare an Ubuntu VM:
 
@@ -30,6 +41,10 @@ ansible-playbook -i inventory playbook.yml
 
 The playbook installs Docker and the Compose plugin, adds the SSH user to the
 Docker group, and configures UFW for SSH and web traffic.
+
+Create `group_vars/app/vault.yml` from the example and encrypt it before using
+cloud credentials. The encrypted file is ignored by Git; no decrypted vault
+file belongs in the repository.
 
 Deploy a selected immutable image tag with one command:
 

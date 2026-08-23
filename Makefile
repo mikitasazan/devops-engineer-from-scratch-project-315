@@ -15,6 +15,10 @@ update-deps:
 install:
 	./gradlew dependencies
 
+ansible-install:
+	ansible-galaxy role install -r requirements.yml
+	ansible-galaxy collection install -r requirements.yml
+
 build:
 	./gradlew build
 
@@ -33,4 +37,4 @@ lint:
 lint-fix:
 	./gradlew spotlessApply
 
-.PHONY: build docker-build docker-run deploy
+.PHONY: build docker-build docker-run deploy ansible-install

@@ -13,6 +13,7 @@ import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.S3ClientBuilder;
+import software.amazon.awssdk.services.s3.S3Configuration;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
@@ -42,7 +43,9 @@ public class S3ImageStorageService implements ImageStorageService {
                         .credentialsProvider(credentialsProvider);
 
         if (StringUtils.hasText(props.endpoint())) {
-            builder.endpointOverride(URI.create(props.endpoint()));
+            builder.endpointOverride(URI.create(props.endpoint()))
+                    .serviceConfiguration(
+                            S3Configuration.builder().pathStyleAccessEnabled(true).build());
         }
 
         return builder.build();
@@ -55,7 +58,9 @@ public class S3ImageStorageService implements ImageStorageService {
                         .region(Region.of(props.region()))
                         .credentialsProvider(credentialsProvider);
         if (StringUtils.hasText(props.endpoint())) {
-            builder.endpointOverride(URI.create(props.endpoint()));
+            builder.endpointOverride(URI.create(props.endpoint()))
+                    .serviceConfiguration(
+                            S3Configuration.builder().pathStyleAccessEnabled(true).build());
         }
         return builder.build();
     }

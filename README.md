@@ -49,6 +49,18 @@ docker compose --env-file .env -f docker-compose.prod.yml up -d
 The application waits for PostgreSQL to become healthy. Hibernate updates the
 schema on startup, so a restart keeps data in the named volumes.
 
+For local S3-compatible file storage, copy `.env.s3.example` to `.env.s3` and
+start the PostgreSQL, MinIO, and application services together:
+
+```bash
+docker compose --env-file .env.example --env-file .env.s3 \
+  -f docker-compose.prod.yml -f docker-compose.s3.yml up -d
+```
+
+The MinIO initializer creates the bucket before the application starts. In a
+cloud deployment, replace these local values with Ansible Vault secrets for
+the selected S3 provider.
+
 ## Environment variables
 
 Key variables are read directly by Spring Boot (see `src/main/resources/application.yml` and `application-prod.yml` for defaults):

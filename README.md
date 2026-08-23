@@ -15,8 +15,21 @@ API documentation is available via Swagger UI at `http://localhost:8080/swagger-
 - Backend (Spring Boot) lives in the repository root.
 - Frontend (React Admin + Vite) is located in `frontend/`.
 - Shared static assets for the backend are served from `src/main/resources/static` (populated by the frontend build when needed).
+- Server preparation is defined in `playbook.yml`; set the VM address in `inventory` before running it.
 
 Keep this structure in mind when running commands—backend tooling (`gradlew`, `make run`, tests) run from the root, frontend tooling (`npm`, `vite`) runs from `frontend/`.
+
+## Server preparation
+
+Install the required Ansible role and prepare an Ubuntu VM:
+
+```bash
+ansible-galaxy install -r requirements.yml
+ansible-playbook -i inventory playbook.yml
+```
+
+The playbook installs Docker and the Compose plugin, adds the SSH user to the
+Docker group, and configures UFW for SSH and web traffic.
 
 ## Environment variables
 
